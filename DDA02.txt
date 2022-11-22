@@ -1,0 +1,111 @@
+// Name - TEJAS KOLI
+// Roll No - TI69
+
+#include<iostream>
+using namespace std;
+int a,b,j,k;
+int main()
+{
+	cout<<"Enter the number of elements :";
+	cin>>a;
+	cout<<"\nEnter the maximum weight :";
+	cin>>b;
+	int p[a],wt[a];
+	
+	for(j=0;j<a;j++)
+	{
+		cout<<"\nEnter the profit and weight for element "<<j+1<<" :";
+		cin>>p[j]>>wt[j];
+	}
+	
+	
+	int i,w;
+	i=a+1;
+	w=b+1;
+	
+	int v[i][w];
+	for(j=0;j<i;j++)
+	{
+		for(k=0;k<w;k++)
+		{
+			v[j][0]=0;
+			v[0][k]=0;
+		}
+	}
+	
+	
+	for(j=1;j<i;j++)
+	{
+		for(k=1;k<w;k++)
+		{
+			if(k<wt[j-1])
+			{
+				v[j][k]=v[j-1][k];
+			}
+			else if(k>=wt[j-1])
+			{
+				v[j][k]=max(v[j-1][k],p[j-1]+(v[j-1][k-wt[j-1]]));
+			}
+		}
+	}
+	
+	cout<<"\n";
+	
+	for(j=0;j<i;j++)
+	{
+		for(k=0;k<w;k++)
+		{
+			cout<<v[j][k]<<" ";
+		}
+		cout<<"\n";
+	}
+	
+	int x[a]={0};
+	i=a,w=b;
+	while(i>0 && w>0)
+	{
+		if(v[i][w]!=v[i-1][w])
+		{
+			x[i-1]=1;
+			i=i-1;
+			w=w-wt[i];
+		}
+		else
+		{
+			i=i-1;
+		}
+	}
+	
+	cout<<"\n";
+	cout<<"{\t";
+	for(j=0;j<a;j++)
+	{
+		cout<<x[j]<<"\t";
+	}
+	cout<<"}";
+}
+
+/*OUTPUT
+Enter the number of elements :4
+
+Enter the maximum weight :8
+
+Enter the profit and weight for element 1 :1 2
+
+Enter the profit and weight for element 2 :2 3
+
+Enter the profit and weight for element 3 :5 4
+
+Enter the profit and weight for element 4 :6 5
+
+0 0 0 0 0 0 0 0 0
+0 0 1 1 1 1 1 1 1
+0 0 1 2 2 3 3 3 3
+0 0 1 2 5 5 6 7 7
+0 0 1 2 5 6 6 7 8
+
+{       0       1       0       1       }
+--------------------------------
+Process exited after 19.58 seconds with return value 0
+Press any key to continue . . .
+*/

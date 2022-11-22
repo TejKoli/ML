@@ -1,0 +1,193 @@
+﻿//TEJAS KOLI 
+//TI69 
+#include <iostream> 
+using namespace std; 
+
+void bell_ford(){ 
+             int n,s=0,e; 
+             cout<<"\nEnter the number of vertices: "; 
+             cin>>n; 
+  
+             int u,v; 
+             int mat[n][n]; 
+             int prev[n]; 
+  
+  
+             for(int i=0;i<n;i++){ 
+                          for(int j=0;j<n;j++){ 
+                                       mat[i][j]=0; 
+                          } 
+             } 
+  
+             cout<<"\nEnter the number of edges: "; 
+             cin>>e; 
+  
+             cout<<"\nEnter Source Vertex: "; 
+             int src; 
+             cin>>src; 
+  
+             int edgeweight[e+e]={0}; 
+             cout<<"\nEnter Weights of the repective edges"<<endl; 
+             int p=0; 
+  
+             for(int i=0;i<e;i++){ 
+                          int u,v,w; 
+                          cout<<"\nEnter the source vertex: "; 
+                          cin>>u; 
+               
+                          cout<<"\nEnter the destination vertex: "; 
+                          cin>>v; 
+               
+                          cout<<"\nEnter the weight of edges: "; 
+                          cin>>w; 
+               
+                          edgeweight[p]=u; 
+                          edgeweight[p+1]=v; 
+               
+                          p=p+2; 
+                          mat[u][v]=w; 
+             } 
+  
+             int z[n]; 
+  
+             for(int i=0; i<n; i++){ 
+             z[i]=999; 
+    } 
+    z[s]=0; 
+     
+     for(int i=0; i<n; i++){ 
+         
+        for(int j=0; j<e+e; j=j+2){ 
+             
+            int u=edgeweight[j]; 
+            int v=edgeweight[j+1]; 
+         
+            if(z[u]+mat[u][v]<z[v]){ 
+             
+               z[v]=z[u]+mat[u][v]; 
+            } 
+        } 
+         
+        cout<<"\n\nAfter "<<i+1<<" iteration the distance array of vertices:  
+"<<endl; 
+         
+        cout<<"\nVertices: "; 
+        for(int k=0; k<n; k++){ 
+             
+            cout<<k<<"\t"; 
+        } 
+         
+        cout<<"\nDistance: "; 
+        for(int l=0; l<n; l++){ 
+             
+            cout<<z[l]<<"\t"; 
+        } 
+         
+        int d[n]; 
+  
+                            for(int i=0; i<n; i++){ 
+                                          d[i]=999; 
+                            } 
+        d[src]=0; 
+         
+        cout<<endl; 
+         
+        if(i == 0){ 
+                              
+                                          for(int k=0; k<n; k++){ 
+                                                        prev[k]=d[k]; 
+                                          } 
+                            } 
+                            else{ 
+                              
+                                          int flag=0; 
+                                          for(int k=0; k<n; k++){ 
+                                            
+                                                        if(prev[k]!=d[k]){ 
+                                                                      flag=1; 
+                                                                      break; 
+                                                        } 
+                                          } 
+                              
+                                          if(flag==0){ 
+                                            
+                                                        cout<<"\nThere is no change in this iteration ,  
+so we can stop here."<<endl; 
+                                                        break; 
+                                            
+                                          } 
+                                          else if(i==n-1){ 
+                                            
+                                                        cout<<"\nAs there is change in "<<n<<" iteration  
+we can conclude that there is a negative cycle in a graph"<<endl; 
+                                                        cout<<"This graph cannot be solved  
+further"<<endl; 
+                                          } 
+                                          else{ 
+                                            
+                                                        for(int k=0; k<n; k++){ 
+                                                           prev[k]=d[k]; 
+                                              } 
+                                            
+                                          } 
+                            }  
+                
+              } 
+} 
+
+int main(){ 
+  
+  
+          bell_ford(); 
+} 
+
+/* 
+OUTPUT 
+Enter the number of vertices: 4 
+
+Enter the number of edges: 4 
+
+Enter Source Vertex: 0 
+
+Enter Weights of the repective edges 
+
+Enter the source vertex: 0 
+
+Enter the destination vertex: 1 
+
+Enter the weight of edges: 5 
+
+Enter the source vertex: 0 
+
+Enter the destination vertex: 3 
+
+Enter the weight of edges: 4 
+
+Enter the source vertex: 1 
+
+Enter the destination vertex: 2 
+
+Enter the weight of edges: 3 
+
+Enter the source vertex: 2 
+
+Enter the destination vertex: 3 
+
+Enter the weight of edges: -10 
+
+After 1 iteration the distance array of vertices: 
+
+Vertices: 0     1       2       3 
+Distance: 0     5       8       -2 
+
+After 2 iteration the distance array of vertices: 
+
+Vertices: 0     1       2       3 
+Distance: 0     5       8       -2 
+
+There is no change in this iteration , so we can stop here. 
+
+-------------------------------- 
+Process exited after 22.43 seconds with return value 0 
+Press any key to continue . . . 
+*/ 

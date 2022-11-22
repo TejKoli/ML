@@ -1,0 +1,122 @@
+// NAME :- TEJAS KOLI
+// ROLL NO. :- TI69
+
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+
+int main()
+{
+	int n, total_wt, curr_wt, max_ind;	
+	cout<<"\nEnter the total number of elements (n) : ";
+	cin>>n;
+	float temp, max, xipi = 0, xiwi = 0;
+	float pi[n], wi[n], pw[n], xi[n];
+	
+	cout<<"\nEnter the total weight capacity of bag (W) : ";
+	cin>>total_wt;
+	for(int i=0; i<n; i++)
+	{
+		cout<<"\nEnter the Profit and Weight of element "<<i+1<<" : ";
+		cin>>pi[i]>>wi[i];
+	}
+	
+	for(int i=0; i<n; i++)
+	{
+		pw[i] = pi[i]/wi[i];
+	}
+	
+	cout<<"\nPi :";
+	for(int i=0; i<n; i++)
+	{
+		cout<<"\t\t"<<pi[i];
+	}
+	cout<<"\nWi :";
+	for(int i=0; i<n; i++)
+	{
+		cout<<"\t\t"<<wi[i];
+	}
+	cout<<"\nP/W :";
+	for(int i=0; i<n; i++)
+	{
+		cout<<"\t\t"<<pw[i];
+	}
+	
+	for(int i=0; i<n; i++)
+	{
+		xi[i] = 0;
+	}
+	curr_wt = total_wt;
+	do
+	{
+		max=0;
+		for(int i=0; i<n; i++)
+		{
+			if(pw[i] > max)
+			{
+				max = pw[i];
+				max_ind = i;
+			}	
+		}
+		pw[max_ind] = 0;
+		
+		if(curr_wt >= wi[max_ind])
+		{
+			xi[max_ind] = 1;
+		}
+		else
+		{
+			xi[max_ind] = curr_wt/wi[max_ind];
+		}
+		curr_wt = curr_wt - (wi[max_ind]*xi[max_ind]);
+	}while(curr_wt != 0);
+	
+	cout<<"\nXi :";
+	for(int i=0; i<n; i++)
+	{
+		cout<<"\t\t"<<xi[i];
+	}
+	
+	for(int i=0; i<n; i++)
+	{
+		xiwi = xiwi + (xi[i]*wi[i]);
+	}
+	for(int i=0; i<n; i++)
+	{
+		xipi = xipi + (xi[i]*pi[i]);
+	}
+	cout<<"\nExiwi = "<<xiwi;
+	cout<<"\nExipi = "<<xipi;
+}
+
+
+/*OUTPUT
+Enter the total number of elements (n) : 7
+
+Enter the total weight capacity of bag (W) : 15
+
+Enter the Profit and Weight of element 1 : 10 2
+
+Enter the Profit and Weight of element 2 : 5 3
+
+Enter the Profit and Weight of element 3 : 15 5
+
+Enter the Profit and Weight of element 4 : 7 7
+
+Enter the Profit and Weight of element 5 : 6 1
+
+Enter the Profit and Weight of element 6 : 18 4
+
+Enter the Profit and Weight of element 7 : 3 1
+
+Pi :    10         5               15         7          6        18            3
+Wi :    2          3               5          7          1         4            1
+P/W :   5          1.66667         3          1          6         4.5          3
+Xi :    1          0.666667        1          0          1         1            1
+Exiwi = 15
+Exipi = 55.3333
+--------------------------------
+Process exited after 34.53 seconds with return value 0
+Press any key to continue . . .
+*/
